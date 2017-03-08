@@ -2,7 +2,7 @@ FROM alpine:latest
 MAINTAINER Iiriix Esmaeeli <iiriix@gmail.com>
 ENV ENV=/etc/profile.d/cloud-sdk
 
-RUN apk add --no-cache curl python \
+RUN apk add --no-cache curl python docker \
   \
   # Installing Google Cloud SDK
   && curl https://dl.google.com/dl/cloudsdk/channels/rapid/google-cloud-sdk.tar.gz | tar xz \

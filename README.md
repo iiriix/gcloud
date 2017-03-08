@@ -64,6 +64,15 @@ Here is the list of variables:
       iiriix/gcloud kubectl get deploy
 ```
 
+#### Docker inside docker
+Mount docker socket into the container and run docker commands to build, push and etc.
+
+```bash
+  $ docker run --rm -it \
+      -v /var/run/docker.sock:/var/run/docker.sock \
+      iiriix/gcloud docker ps
+```
+
 ### Build
 If you need to customize or build it yourself:
 ```bash
@@ -75,6 +84,8 @@ If you need to customize or build it yourself:
 
 ### ToDO
 - [x] Add support for environment variables to initialize the SDK and authenticate to GCP.
+- [x] Add docker package.
+- [ ] Add support for running a custom script mounted in a pre-defined path.
 - [ ] Support for different Cloud SDK versions.
 
 ### Feedback
