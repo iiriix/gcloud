@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sample-nginx
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sample-nginx
+        team: devops
+    spec:
+      containers:
+      - name: sample-nginx
+        image: gcr.io/{{CLOUDSDK_PROJECT_NAME}}/sample-nginx:latest
+        ports:
+        - containerPort: 80

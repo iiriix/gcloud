@@ -15,4 +15,3 @@ RUN apk add --no-cache curl python docker \
 
 COPY init.sh /init.sh
 ENTRYPOINT ["/init.sh"]
-CMD ["gcloud","info"]
