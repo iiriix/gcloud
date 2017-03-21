@@ -40,5 +40,15 @@ if [ -n "${CLOUDSDK_CLUSTER_NAME}" ]; then
   fi
 fi
 
-# Run the parameters
-exec "$@"
+# Run the ci.sh script
+if [ -f "/code/ci.sh" ]; then
+  sh /code/ci.sh
+  exit $?
+fi
+
+# Run the parameters if any, or run gcloud info
+if [ -n "$1" ]; then
+  exec "$@"
+else
+  gcloud info
+fi

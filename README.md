@@ -51,7 +51,6 @@ Here is the list of variables:
       -e "CLOUDSDK_COMPUTE_ZONE=europe-west1-b" \
       -e "CLOUDSDK_CLUSTER_NAME=mycluster" \
       iiriix/gcloud gcloud compute instances list
-
 ```
 
 ```bash
@@ -64,13 +63,37 @@ Here is the list of variables:
       iiriix/gcloud kubectl get deploy
 ```
 
-#### Docker inside docker
+#### Docker Inside Docker
 Mount docker socket into the container and run docker commands to build, push and etc.
 
 ```bash
   $ docker run --rm -it \
       -v /var/run/docker.sock:/var/run/docker.sock \
       iiriix/gcloud docker ps
+```
+
+#### Running a Custom Script
+The init script looks for a file named `/code/ci.sh` and runs it when the container starts. This can be useful to put whatever you want to run inside the container in this file and just mount it as /code/ci.sh in the container.
+
+```bash
+  $ docker run --rm -it \
+      -v /your_script.sh:/code/ci.sh \
+      iiriix/gcloud
+```
+
+#### Real World Example
+Mount your code as `/code`. The `/code/ci.sh` script will be run in the container to build, test, push and deploy your code on your infrastructure:
+
+```bash
+	$ docker run --rm -it \
+      -v $(pwd)/service-key.json:/service-key.json \
+      -v /var/run/docker.sock:/var/run/docker.sock \
+      -v $(pwd)/sample-nginx:/code \
+      -e "CLOUDSDK_SERVICE_ACCOUNT_FILE=/service-key.json" \
+      -e "CLOUDSDK_PROJECT_NAME=myproject" \
+      -e "CLOUDSDK_COMPUTE_ZONE=europe-west1-b" \
+      -e "CLOUDSDK_CLUSTER_NAME=mycluster" \
+      iiriix/gcloud
 ```
 
 ### Build
@@ -85,7 +108,7 @@ If you need to customize or build it yourself:
 ### ToDO
 - [x] Add support for environment variables to initialize the SDK and authenticate to GCP.
 - [x] Add docker package.
-- [ ] Add support for running a custom script mounted in a pre-defined path.
+- [x] Add support for running a custom script mounted in a predefined path.
 - [ ] Support for different Cloud SDK versions.
 
 ### Feedback
